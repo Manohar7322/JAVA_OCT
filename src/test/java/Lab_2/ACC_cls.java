@@ -11,7 +11,6 @@ public class ACC_cls {
 	        this.balance = initialBalance;
 	        this.accHolder = accHolder;
 	    }
-
 	    public void deposit(double amount) {
 	        if (amount > 0) {
 	            balance += amount;
@@ -36,7 +35,7 @@ public class ACC_cls {
 	    public void setBalance(double balance) {
 	        this.balance = balance;
 	    }
-
+	    @Override
 	    public String toString() {
 	        return "Account{accNum=" + accNum + ", balance=" + balance + ", accHolder=" + accHolder + "}";
 	    }

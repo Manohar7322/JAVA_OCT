@@ -1,6 +1,6 @@
 package Lab_2;
 
-class Person {
+class Person{
     private String name;
     private float age;
 
@@ -8,6 +8,7 @@ class Person {
         this.name = name;
         this.age = age;
     }
+
     public String getName() {
         return name;
     }
@@ -15,6 +16,7 @@ class Person {
     public void setName(String name) {
         this.name = name;
     }
+
     public float getAge() {
         return age;
     }
@@ -22,14 +24,13 @@ class Person {
     public void setAge(float age) {
         this.age = age;
     }
-
     @Override
     public String toString() {
         return "Person [name=" + name + ", age=" + age + "]";
     }
 }
 
-class Account {
+abstract class Account {
     private long accNum;
     private double balance;
     private Person accHolder;
@@ -38,7 +39,7 @@ class Account {
     public Account(Person accHolder, double initialBalance) {
         this.accHolder = accHolder;
         this.balance = initialBalance;
-        this.accNum = accCounter++; // Auto-generate accNum
+        this.accNum = accCounter++; 
     }
 
     public long getAccNum() {
@@ -70,33 +71,40 @@ class Account {
         }
     }
 
-    public boolean withdraw(double amount) {
-        if (amount > 0 && (balance - amount >= 500)) {
-            balance -= amount;
-            System.out.println("Withdrew INR " + amount + " from account: " + accNum);
-        } else {
-            System.out.println("Insufficient balance or minimum balance requirement not met");
-        }
-		return false;
-    }
+    public abstract boolean withdraw(double amount);
     @Override
     public String toString() {
         return "Account [accNum=" + accNum + ", balance=" + balance + ", accHolder=" + accHolder + "]";
     }
 }
 
-public class TC0014 {
+class SavingAccount extends Account {
+    public SavingAccount(Person accHolder, double initialBalance) {
+        super(accHolder, initialBalance);
+    }
 
+    @Override
+    public boolean withdraw(double amount) {
+        if (amount > 0 && amount <= getBalance()) {
+            setBalance(getBalance() - amount);
+            System.out.println("Withdrawn INR " + amount + " from account: " + getAccNum());
+            return true;
+        } else {
+            System.out.println("Insufficient balance or invalid amount for withdrawal");
+            return false;
+        }
+    }
+}
+
+public class lab_5 {
     public static void main(String[] args) {
-       
         Person smith = new Person("Smith", 30);
         Person kathy = new Person("Kathy", 28);
 
-        Account smithAccount = new Account(smith, 2000);
-        Account kathyAccount = new Account(kathy, 3000);
+        Account smithAccount = new SavingAccount(smith, 2000);
+        Account kathyAccount = new SavingAccount(kathy, 3000);
 
         smithAccount.deposit(2000);
-
         kathyAccount.withdraw(2000);
 
         System.out.println("Updated balance in Smith's account: " + smithAccount.getBalance());

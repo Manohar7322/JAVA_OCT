@@ -6,7 +6,7 @@ class CurrentAccount extends Account {
     public CurrentAccount(double initialBalance, Person accHolder) {
         super(accHolder, initialBalance);
     }
-
+    @Override
     public boolean withdraw(double amount) {
         if (getBalance() - amount >= -OVERDRAFT_LIMIT) {
             setBalance(getBalance() - amount);

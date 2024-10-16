@@ -6,7 +6,7 @@ class SavingsAccount extends Account {
     public SavingsAccount(double initialBalance, Person accHolder) {
         super(accHolder, initialBalance);
     }
-
+    @Override
     public boolean withdraw(double amount) {
         if (getBalance() - amount >= MINIMUM_BALANCE) {
             setBalance(getBalance() - amount);
