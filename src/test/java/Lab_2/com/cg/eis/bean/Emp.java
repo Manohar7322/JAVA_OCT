@@ -1,20 +1,24 @@
 package Lab_2.com.cg.eis.bean;
 
+import Lab_2.com.cg.eis.exception.EmployeeException;
+
 public class Emp {
-	private int id;
+    private int id;
     private String name;
     private double salary;
     private String designation;
     private String insuranceScheme;
 
-    public void Employee(int id, String name, double salary, String designation) {
+    public Emp(int id, String name, double salary, String designation) throws EmployeeException {
+        if (salary < 3000) {
+            throw new EmployeeException("Salary must be above 3000.");
+        }
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.designation = designation;
         this.insuranceScheme = determineInsuranceScheme(salary, designation);
     }
-
     public int getId() {
         return id;
     }
@@ -35,7 +39,10 @@ public class Emp {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(double salary) throws EmployeeException {
+        if (salary < 3000) {
+            throw new EmployeeException("Salary must be above 3000.");
+        }
         this.salary = salary;
         this.insuranceScheme = determineInsuranceScheme(salary, this.designation);
     }
@@ -65,9 +72,9 @@ public class Emp {
         }
     }
 
+    @Override
     public String toString() {
         return "Employee [id=" + id + ", name=" + name + ", salary=" + salary +
                ", designation=" + designation + ", insuranceScheme=" + insuranceScheme + "]";
     }
-
 }

@@ -1,11 +1,13 @@
 package Lab_2.com.cg.eis.pl;
+
 import Lab_2.com.cg.eis.bean.Emp;
+import Lab_2.com.cg.eis.exception.EmployeeException;
 import Lab_2.com.cg.eis.service.Emp_service;
 import Lab_2.com.cg.eis.service.Service_Impl;
 import java.util.Scanner;
 
 public class Emp_Main {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Emp_service employeeService = new Service_Impl();
 
@@ -32,8 +34,12 @@ public class Emp_Main {
                     System.out.print("Enter Employee Designation: ");
                     String designation = scanner.nextLine();
 
-                    Emp employee = new Emp();
-                    employeeService.addEmployee(employee);
+                    try {
+                        Emp employee = new Emp(id, name, salary, designation);
+                        employeeService.addEmployee(employee);
+                    } catch (EmployeeException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
 
                 case 2:
